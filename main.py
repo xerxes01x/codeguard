@@ -1,15 +1,17 @@
-from analyzer import analyze_code
+from fastapi import FastAPI
+from api.routes import router
 
-def main():
-    sample_code = """
-print("Hello World")
-"""
+# Initialize FastAPI application
+app = FastAPI(
+    title="CodeGuard",
+    description="Automated Code Review and Bug Detection API",
+    version="1.0.0"
+)
 
-    issues = analyze_code(sample_code)
+# Include API routes
+app.include_router(router)
 
-    print("Detected Issues:")
-    for issue in issues:
-        print("-", issue)
-
-if __name__ == "__main__":
-    main()
+# Root endpoint
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to CodeGuard - Automated Code Review System"}
